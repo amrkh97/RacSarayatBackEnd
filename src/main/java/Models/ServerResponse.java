@@ -3,8 +3,10 @@ package Models;
 
 public class ServerResponse {
 
-	protected String responseHexCode;
-	protected String responseMsg;
+	private String responseHexCode;
+	private String responseMsg;
+	private Integer id;
+	private Integer privilege;
 
 	/**
 	 * @return the responseHexCode
@@ -32,6 +34,22 @@ public class ServerResponse {
 	 */
 	public void setResponseMsg(String responseMsg) {
 		this.responseMsg = responseMsg;
+	}
+
+	public Integer getPrivilege() {
+		return privilege;
+	}
+
+	public void setPrivilege(Integer privilege) {
+		this.privilege = privilege;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 }
