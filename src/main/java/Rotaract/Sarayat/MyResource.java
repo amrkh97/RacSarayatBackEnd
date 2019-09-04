@@ -9,7 +9,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import BLL.UserManager;
-import Models.LoginModel;
+import Models.MemberModel;
 import Models.ServerResponse;
 
 /**
@@ -34,7 +34,7 @@ public class MyResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response login(LoginModel model) {
+    public Response login(MemberModel model) {
     	
     	ServerResponse response = new ServerResponse();
     	response = UserManager.login(model);
@@ -53,19 +53,18 @@ public class MyResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response logout() {
+    public Response logout(MemberModel model) {
     	
     	ServerResponse response = new ServerResponse();
-    	
+    	response = UserManager.logout(model);
     	switch (response.getResponseHexCode()) {
 		case "00":
-			
-			break;
+			return Response.ok(response).header("Access-Control-Allow-Origin", "*").build();
 			
 		default:
-			break;
+			return Response.status(400).entity(response).header("Access-Control-Allow-Origin", "*").build();
 		}
-    	
-    	return Response.ok().header("Access-Control-Allow-Origin", "*").build();
     }
+    
+    
 }

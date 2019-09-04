@@ -6,6 +6,7 @@ public class MemberModel {
 	private String lastName;
 	private Integer age;
 	private String email;
+	private String password;
 	private String rotaryID;
 	private Integer yearsInClub;
 	private String position;
@@ -58,6 +59,12 @@ public class MemberModel {
 	}
 	public void setPrivilege(Integer privilege) {
 		this.privilege = privilege;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 }

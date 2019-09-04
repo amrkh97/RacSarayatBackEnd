@@ -39,4 +39,26 @@ public class UserDAL {
 		return response;
 	}
 
+	public static ServerResponse logout(String email, Connection conn) {
+		String storedProcedure = "EXEC usp_User_logout ?,?,?";
+		ServerResponse response = new ServerResponse();
+		
+		try {
+			CallableStatement cstmt = conn.prepareCall(storedProcedure);
+			cstmt.setString(1, email);
+			cstmt.registerOutParameter(2, Types.NVARCHAR); //HexCode
+			cstmt.registerOutParameter(3, Types.NVARCHAR); //HexMsgivilege
+			
+			cstmt.executeUpdate();
+			
+			response.setResponseHexCode(cstmt.getString(3));
+			response.setResponseMsg(cstmt.getString(4));
+			
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}
+		return response;
+	}
+
 }
