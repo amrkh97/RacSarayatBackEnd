@@ -66,4 +66,20 @@ public class PaymentManager {
 		return paymentArray;
 	}
 
+	public static ServerResponse payFromTreasury(PaymentModel model) {
+		Connection intermediateConnection = DBManager.getDBConn();
+		ServerResponse response = new ServerResponse();
+		try {
+			response = PaymentDAL.payFromTreasury(model,intermediateConnection);
+		} finally {
+			try {
+				intermediateConnection.close();
+				System.out.println("Connection Closed");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return response;
+	}
+
 }

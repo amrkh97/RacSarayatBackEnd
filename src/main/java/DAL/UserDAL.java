@@ -51,8 +51,8 @@ public class UserDAL {
 			
 			cstmt.executeUpdate();
 			
-			response.setResponseHexCode(cstmt.getString(3));
-			response.setResponseMsg(cstmt.getString(4));
+			response.setResponseHexCode(cstmt.getString(2));
+			response.setResponseMsg(cstmt.getString(3));
 			
 		} catch (Exception e) {
 			

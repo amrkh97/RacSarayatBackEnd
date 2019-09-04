@@ -89,9 +89,15 @@ public class MyResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response payFromTreasury(PaymentModel model) {
 		
-		PaymentArray array = new PaymentArray();
-		array = PaymentManager.getTreasuryByMonthAndYear(model);
-		return Response.ok(array).header("Access-Control-Allow-Origin", "*").build();
+		ServerResponse response = new ServerResponse();
+		response = PaymentManager.payFromTreasury(model);
+		switch (response.getResponseHexCode()) {
+		case "00":
+			return Response.ok(response).header("Access-Control-Allow-Origin", "*").build();
+
+		default:
+			return Response.status(400).entity(response).header("Access-Control-Allow-Origin", "*").build();
+		}
 
 	}
 	

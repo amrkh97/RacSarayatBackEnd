@@ -88,6 +88,30 @@ public class PaymentDAL {
 		return array;
 	}
 
+	public static ServerResponse payFromTreasury(PaymentModel model, Connection conn) {
+		
+		String storedProcedure = "EXEC usp_Payment_Pay ?,?,?,?";
+		ServerResponse response = new ServerResponse();
+		
+		try {
+			CallableStatement cstmt = conn.prepareCall(storedProcedure);
+			cstmt.setInt(1, model.getPaidAmount());
+			cstmt.setString(2, model.getRecieverOfPayment());
+			
+			cstmt.registerOutParameter(3, Types.NVARCHAR); //HexCode
+			cstmt.registerOutParameter(4 ,Types.NVARCHAR); //HexMsg
+			cstmt.executeUpdate();
+			
+			response.setResponseHexCode(cstmt.getString(3));
+			response.setResponseMsg(cstmt.getString(4));
+			
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}
+		return response;
+	}
+
 	//----------------------------------------------------------------------------\\
 }
 
