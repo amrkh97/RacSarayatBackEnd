@@ -40,7 +40,7 @@ public class UserDAL {
 	}
 
 	public static ServerResponse logout(String email, Connection conn) {
-		String storedProcedure = "EXEC usp_User_logout ?,?,?";
+		String storedProcedure = "EXEC usp_User_Logout ?,?,?";
 		ServerResponse response = new ServerResponse();
 		
 		try {
