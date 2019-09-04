@@ -27,7 +27,7 @@ public class MyResource {
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public String getIt() {
-        return "Hello, Heroku!";
+        return "Server is Running";
     }
     
     @Path("login")
@@ -40,14 +40,12 @@ public class MyResource {
     	response = UserManager.login(model);
     	switch (response.getResponseHexCode()) {
 		case "00":
-			
-			break;
+			return Response.ok(response).header("Access-Control-Allow-Origin", "*").build();
 			
 		default:
-			break;
+			return Response.status(400).entity(response).header("Access-Control-Allow-Origin", "*").build();
 		}
     	
-    	return Response.ok().header("Access-Control-Allow-Origin", "*").build();
     }
     
     

@@ -8,6 +8,8 @@ public class MemberModel {
 	private String email;
 	private String rotaryID;
 	private Integer yearsInClub;
+	private String position;
+	private Integer privilege;
 	
 	public Integer getYearsInClub() {
 		return yearsInClub;
@@ -44,6 +46,18 @@ public class MemberModel {
 	}
 	public void setRotaryID(String rotaryID) {
 		this.rotaryID = rotaryID;
+	}
+	public String getPosition() {
+		return position;
+	}
+	public void setPosition(String position) {
+		this.position = position;
+	}
+	public Integer getPrivilege() {
+		return privilege;
+	}
+	public void setPrivilege(Integer privilege) {
+		this.privilege = privilege;
 	}
 
 }
