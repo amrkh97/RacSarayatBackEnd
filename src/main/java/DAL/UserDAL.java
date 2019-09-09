@@ -10,7 +10,7 @@ public class UserDAL {
 
 	public static ServerResponse login(String email, String password, Connection conn) {
 		
-		String storedProcedure = "EXEC usp_User_login ?,?,?,?,?,?";
+		String storedProcedure = "USE RAC_SARAYAT; EXEC usp_User_login ?,?,?,?,?,?";
 		ServerResponse response = new ServerResponse();
 		
 		try {
@@ -40,7 +40,7 @@ public class UserDAL {
 	}
 
 	public static ServerResponse logout(String email, Connection conn) {
-		String storedProcedure = "EXEC usp_User_Logout ?,?,?";
+		String storedProcedure = "USE RAC_SARAYAT; EXEC usp_User_Logout ?,?,?";
 		ServerResponse response = new ServerResponse();
 		
 		try {
