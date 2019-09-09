@@ -2,6 +2,8 @@ package Models;
 
 public class MemberModel {
 	
+	private Integer memberID;
+	private String nationalID;
 	private String firstName;
 	private String lastName;
 	private Integer age;
@@ -65,6 +67,18 @@ public class MemberModel {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public Integer getMemberID() {
+		return memberID;
+	}
+	public void setMemberID(Integer memberID) {
+		this.memberID = memberID;
+	}
+	public String getNationalID() {
+		return nationalID;
+	}
+	public void setNationalID(String nationalID) {
+		this.nationalID = nationalID;
 	}
 
 }

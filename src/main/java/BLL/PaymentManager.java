@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import DAL.PaymentDAL;
 import DB.DBManager;
+import Models.MemberFeesArray;
 import Models.PaymentArray;
 import Models.PaymentModel;
 import Models.ServerResponse;
@@ -81,5 +82,60 @@ public class PaymentManager {
 		}
 		return response;
 	}
+
+	public static MemberFeesArray getTreasuryMemberRecord(PaymentModel model) {
+		MemberFeesArray array = new MemberFeesArray();
+		Connection intermediateConnection = DBManager.getDBConn();
+		
+		try {
+			array = PaymentDAL.getTreasuryMemberRecord(model.getMemberID(),intermediateConnection);
+		} finally {
+			try {
+				intermediateConnection.close();
+				System.out.println("Connection Closed");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return array;
+	}
+	
+	public static MemberFeesArray getTreasuryMemberRecordByYear(PaymentModel model) {
+		MemberFeesArray array = new MemberFeesArray();
+		Connection intermediateConnection = DBManager.getDBConn();
+		
+		try {
+			array = PaymentDAL.getTreasuryMemberRecordByYear(model.getMemberID(),model.getYear(),intermediateConnection);
+		} finally {
+			try {
+				intermediateConnection.close();
+				System.out.println("Connection Closed");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return array;
+	}
+
+	public static MemberFeesArray getTreasuryPaidMembers(PaymentModel model) {
+		MemberFeesArray array = new MemberFeesArray();
+		Connection intermediateConnection = DBManager.getDBConn();
+		
+		try {
+			array = PaymentDAL.getTreasuryPaidMembers(model.getMonth(),model.getYear(),intermediateConnection);
+		} finally {
+			try {
+				intermediateConnection.close();
+				System.out.println("Connection Closed");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return array;
+	}
+
 
 }
