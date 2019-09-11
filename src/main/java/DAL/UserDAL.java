@@ -132,10 +132,10 @@ public class UserDAL {
 				model.setFirstName(rs.getString(4));
 				model.setLastName(rs.getString(5));
 				model.setBirthDate(rs.getString(6));
-			//	model.setAge(rs.getInt(7));
+				model.setAge(rs.getInt(7));
 				model.setEmail(rs.getString(8));
-				model.setPosition(position);
 				model.setYearsInClub(rs.getString(10));
+				model.setPosition(rs.getInt(11));
 				model.setMemberStatusCode(rs.getString(12));
 				model.setRotaryID(rs.getString(14));
 					
