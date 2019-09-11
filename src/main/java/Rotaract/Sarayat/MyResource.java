@@ -15,6 +15,7 @@ import javax.ws.rs.core.Response;
 import BLL.PaymentManager;
 import BLL.UserManager;
 import DB.DBManager;
+import Models.MemberArray;
 import Models.MemberFeesArray;
 import Models.MemberModel;
 import Models.PaymentArray;
@@ -143,6 +144,42 @@ public class MyResource {
 			return Response.status(400).entity(response).header("Access-Control-Allow-Origin", "*").build();
 		}
 	}
+	
+	
+	@Path("user/assignToPosition")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response assignMemberToPosition(MemberModel model) {
+
+		ServerResponse response = new ServerResponse();
+		response = UserManager.assignMemberToPosition(model);
+		switch (response.getResponseHexCode()) {
+		case "00":
+			return Response.ok(response).header("Access-Control-Allow-Origin", "*").build();
+
+		default:
+			return Response.status(400).entity(response).header("Access-Control-Allow-Origin", "*").build();
+		}
+	}
+	
+	
+	@Path("user/getByPosition")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getMemberByPosition(MemberModel model) {
+
+		MemberArray response = new MemberArray();
+		response = UserManager.getMemberByPosition(model);
+		return Response.ok(response).header("Access-Control-Allow-Origin", "*").build();
+	
+	}
+	
+	
+	
+	
+	//-----------------------------------------------------------------------------------------------------------------------------------//
 
 	@Path("treasury/addMonthlyFees")
 	@POST

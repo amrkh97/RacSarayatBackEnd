@@ -2,8 +2,12 @@ package DAL;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.Types;
+import java.util.ArrayList;
 
+import Models.MemberArray;
+import Models.MemberModel;
 import Models.ServerResponse;
 
 public class UserDAL {
@@ -82,6 +86,71 @@ public class UserDAL {
 			e.printStackTrace();
 		}
 		return response;
+	}
+
+	public static ServerResponse assignMemberToPosition(Integer memberID, Integer position, String rotarianYear, Connection conn) {
+
+		String storedProcedure = "USE RAC_SARAYAT; EXEC usp_User_AssignPosition ?,?,?,?,?";
+		ServerResponse response = new ServerResponse();
+		
+		try {
+			CallableStatement cstmt = conn.prepareCall(storedProcedure);
+			cstmt.setInt(1, memberID);
+			cstmt.setInt(2, position);
+			cstmt.setString(3, rotarianYear);
+			cstmt.registerOutParameter(4, Types.NVARCHAR); //HexCode
+			cstmt.registerOutParameter(5, Types.NVARCHAR); //HexMsg
+			
+			cstmt.executeUpdate();
+			response.setResponseHexCode(cstmt.getString(4));
+			response.setResponseMsg(cstmt.getString(5));
+			
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}
+		return response;
+	}
+
+	public static MemberArray getMemberByPosition(Integer position, String rotarianYear,Connection conn) {
+		
+		MemberArray memberArray = new MemberArray();
+		ArrayList<MemberModel> memberModels = new ArrayList<MemberModel>();
+		String storedProcedure = "USE RAC_SARAYAT; EXEC usp_User_GetByPosition ?,?";
+		ResultSet rs;
+		
+		try {
+			CallableStatement cstmt = conn.prepareCall(storedProcedure);
+			cstmt.setInt(1, position);
+			cstmt.setString(2, rotarianYear);
+			rs = cstmt.executeQuery();
+			while(rs.next()) {
+				MemberModel model = new MemberModel();
+				model.setPositionName(rs.getString(1));
+				model.setMemberID(rs.getInt(2));
+				model.setNationalID(rs.getString(3));
+				model.setFirstName(rs.getString(4));
+				model.setLastName(rs.getString(5));
+				model.setBirthDate(rs.getString(6));
+				model.setAge(rs.getInt(7));
+				model.setEmail(rs.getString(8));
+				model.setYearsInClub(rs.getString(10));
+				model.setPosition(rs.getInt(11));
+				model.setMemberStatusCode(rs.getString(12));
+				model.setRotaryID(rs.getString(14));
+					
+				memberModels.add(model);
+			}
+			rs.close();
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}
+		
+		memberArray.setArrayOfMembers(memberModels);
+		return memberArray;
+		
+		
 	}
 
 }

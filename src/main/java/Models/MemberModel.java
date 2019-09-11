@@ -10,17 +10,20 @@ public class MemberModel {
 	private String email;
 	private String password;
 	private String rotaryID;
-	private Integer yearsInClub;
-	private String position;
+	private String yearsInClub;
+	private Integer position;
 	private Integer privilege;
 	private String memberStatusCode;
 	private String memberStatus;
+	private String rotarianYear;
+	private String positionName;
+	private String birthDate;
 	
-	public Integer getYearsInClub() {
+	public String getYearsInClub() {
 		return yearsInClub;
 	}
-	public void setYearsInClub(Integer yearsInClub) {
-		this.yearsInClub = yearsInClub;
+	public void setYearsInClub(String string) {
+		this.yearsInClub = string;
 	}
 	public String getFirstName() {
 		return firstName;
@@ -51,12 +54,6 @@ public class MemberModel {
 	}
 	public void setRotaryID(String rotaryID) {
 		this.rotaryID = rotaryID;
-	}
-	public String getPosition() {
-		return position;
-	}
-	public void setPosition(String position) {
-		this.position = position;
 	}
 	public Integer getPrivilege() {
 		return privilege;
@@ -93,6 +90,30 @@ public class MemberModel {
 	}
 	public void setMemberStatus(String memberStatus) {
 		this.memberStatus = memberStatus;
+	}
+	public String getRotarianYear() {
+		return rotarianYear;
+	}
+	public void setRotarianYear(String rotarianYear) {
+		this.rotarianYear = rotarianYear;
+	}
+	public Integer getPosition() {
+		return position;
+	}
+	public void setPosition(Integer position) {
+		this.position = position;
+	}
+	public String getPositionName() {
+		return positionName;
+	}
+	public void setPositionName(String positionName) {
+		this.positionName = positionName;
+	}
+	public String getBirthDate() {
+		return birthDate;
+	}
+	public void setBirthDate(String birthDate) {
+		this.birthDate = birthDate;
 	}
 
 }
