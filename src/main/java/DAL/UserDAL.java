@@ -61,4 +61,27 @@ public class UserDAL {
 		return response;
 	}
 
+	public static ServerResponse updateMemberStatus(Integer memberID, String memberStatusCode, Connection conn) {
+		
+		String storedProcedure = "USE RAC_SARAYAT; EXEC usp_User_ChangeStatus ?,?,?,?";
+		ServerResponse response = new ServerResponse();
+		
+		try {
+			CallableStatement cstmt = conn.prepareCall(storedProcedure);
+			cstmt.setInt(1, memberID);
+			cstmt.setString(2, memberStatusCode);
+			cstmt.registerOutParameter(3, Types.NVARCHAR); //HexCode
+			cstmt.registerOutParameter(4, Types.NVARCHAR); //HexMsg
+			
+			cstmt.executeUpdate();
+			response.setResponseHexCode(cstmt.getString(3));
+			response.setResponseMsg(cstmt.getString(4));
+			
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}
+		return response;
+	}
+
 }

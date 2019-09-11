@@ -4,15 +4,6 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Properties;
-
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -45,6 +36,16 @@ public class MyResource {
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
 	public String getIt() {
+
+		/* IMPORTS:
+		 * 
+		 * import java.util.Properties;
+		 * import javax.mail.Message; import javax.mail.MessagingException; import
+		 * javax.mail.PasswordAuthentication; import javax.mail.Session; import
+		 * javax.mail.Transport; import javax.mail.internet.InternetAddress; import
+		 * javax.mail.internet.MimeMessage;
+		 * 
+		 */
 
 		/*
 		 * Properties props = new Properties(); props.put("mail.smtp.host",
@@ -80,9 +81,9 @@ public class MyResource {
 			CallableStatement cstmt = conn.prepareCall("USE RAC_SARAYAT; SELECT * FROM MemberStatus");
 			ResultSet rs = cstmt.executeQuery();
 			Integer numberRecords = 1;
-			while(rs.next()) {
-				System.out.println("RETRIEVED RECORD:"+ numberRecords);
-				numberRecords ++;
+			while (rs.next()) {
+				System.out.println("RETRIEVED RECORD:" + numberRecords);
+				numberRecords++;
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -117,6 +118,23 @@ public class MyResource {
 	public Response logout(MemberModel model) {
 		ServerResponse response = new ServerResponse();
 		response = UserManager.logout(model);
+		switch (response.getResponseHexCode()) {
+		case "00":
+			return Response.ok(response).header("Access-Control-Allow-Origin", "*").build();
+
+		default:
+			return Response.status(400).entity(response).header("Access-Control-Allow-Origin", "*").build();
+		}
+	}
+
+	@Path("user/updateMemberStatus")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response updateMemberStatus(MemberModel model) {
+
+		ServerResponse response = new ServerResponse();
+		response = UserManager.updateMemberStatus(model);
 		switch (response.getResponseHexCode()) {
 		case "00":
 			return Response.ok(response).header("Access-Control-Allow-Origin", "*").build();

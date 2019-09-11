@@ -13,6 +13,8 @@ public class MemberModel {
 	private Integer yearsInClub;
 	private String position;
 	private Integer privilege;
+	private String memberStatusCode;
+	private String memberStatus;
 	
 	public Integer getYearsInClub() {
 		return yearsInClub;
@@ -79,6 +81,18 @@ public class MemberModel {
 	}
 	public void setNationalID(String nationalID) {
 		this.nationalID = nationalID;
+	}
+	public String getMemberStatusCode() {
+		return memberStatusCode;
+	}
+	public void setMemberStatusCode(String memberStatusCode) {
+		this.memberStatusCode = memberStatusCode;
+	}
+	public String getMemberStatus() {
+		return memberStatus;
+	}
+	public void setMemberStatus(String memberStatus) {
+		this.memberStatus = memberStatus;
 	}
 
 }
