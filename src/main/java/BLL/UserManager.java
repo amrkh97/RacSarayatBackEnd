@@ -42,4 +42,20 @@ public class UserManager {
 		return response;
 	}
 
+	public static ServerResponse updateMemberStatus(MemberModel model) {
+		Connection intermediateConnection = DBManager.getDBConn();
+		ServerResponse response = new ServerResponse();
+		try {
+			response = UserDAL.updateMemberStatus(model.getMemberID(),model.getMemberStatusCode(),intermediateConnection);
+		} finally {
+			try {
+				intermediateConnection.close();
+				System.out.println("Connection Closed");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return response;
+	}
+
 }
