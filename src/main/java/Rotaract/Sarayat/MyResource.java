@@ -13,6 +13,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import BLL.PaymentManager;
+import BLL.PositionsManager;
 import BLL.UserManager;
 import DB.DBManager;
 import Models.MemberArray;
@@ -20,6 +21,8 @@ import Models.MemberFeesArray;
 import Models.MemberModel;
 import Models.PaymentArray;
 import Models.PaymentModel;
+import Models.PositionsArray;
+import Models.PositionsModel;
 import Models.ServerResponse;
 
 /**
@@ -274,5 +277,53 @@ public class MyResource {
 		return Response.ok(array).header("Access-Control-Allow-Origin", "*").build();
 
 	}
+	
+	//------------------------------------------------------------------------------------------------------------------//
 
+	@Path("position/add")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response addBoardPosition(PositionsModel model) {
+
+		ServerResponse response = new ServerResponse();
+		response = PositionsManager.addBoardPosition(model);
+		switch (response.getResponseHexCode()) {
+		case "00":
+			return Response.ok(response).header("Access-Control-Allow-Origin", "*").build();
+
+		default:
+			return Response.status(400).entity(response).header("Access-Control-Allow-Origin", "*").build();
+		}
+
+	}
+	
+	@Path("position/getAll")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAllBoardPosition(PositionsModel model) {
+		PositionsArray response = new PositionsArray();
+		response = PositionsManager.getAllPositions();
+		return Response.ok(response).header("Access-Control-Allow-Origin", "*").build();
+
+	}
+	
+	@Path("position/editDescription")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response editBoardPosition(PositionsModel model) {
+
+		ServerResponse response = new ServerResponse();
+		response = PositionsManager.editBoardPosition(model);
+		switch (response.getResponseHexCode()) {
+		case "00":
+			return Response.ok(response).header("Access-Control-Allow-Origin", "*").build();
+
+		default:
+			return Response.status(400).entity(response).header("Access-Control-Allow-Origin", "*").build();
+		}
+
+	}
 }
