@@ -68,7 +68,7 @@ After Installing all the programs and cloning the repo:
 
 1. Right Click on the project -> Run As -> Run on Server
 2. If the server gives an Error of timeout then please increase its maximum timeout from the servers view and try again.
-3. If all goes well a page with 404-Not found should appear *No Worries it means we are on the right track*
+3. If all goes well a page with 404-Not found should appear *No Worries it means we are on the right track* </br>
     The Link Should Look Like This: http://localhost:7070/Sarayat/api
 4. Add the word api after the link and press enter, the sentence: "Server is running" should appear.
 5. If the Sentence does not appear then please review your installation steps and review the classpath.
