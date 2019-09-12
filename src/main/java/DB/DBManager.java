@@ -10,23 +10,24 @@ import org.apache.commons.dbcp2.BasicDataSource;
 
 public class DBManager {
 
-	private static BasicDataSource ds =new BasicDataSource();
-	static{
-		ds.setUrl("jdbc:sqlserver://AMRKHALED97;");
-		ds.setUsername("admin");
-		ds.setPassword("1234");
-		ds.setMinIdle(1);
-		ds.setMaxIdle(10);
-		ds.setMaxOpenPreparedStatements(100);
-	}
-	
 	private static String db_class_string = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-
 	private static String db_server = "jdbc:sqlserver://AMRKHALED97;";
 	private static String db_name = "databaseName=RAC_SARAYAT";
 	private static String db_userid = "admin";
 	private static String db_password = "1234";
 	private static Connection conn;
+	
+	private static BasicDataSource ds =new BasicDataSource();
+	static{
+		
+		ds.setUrl(db_server);
+		ds.setUsername(db_userid);
+		ds.setPassword(db_password);
+		ds.setMinIdle(1);
+		ds.setMaxIdle(10);
+		ds.setMaxOpenPreparedStatements(100);
+	}
+	
 
 	public static ResultSet ExecuteQuery(String SelectStatement) {
 
