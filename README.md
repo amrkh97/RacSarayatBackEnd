@@ -5,8 +5,8 @@ Web Services for Rotaract Sarayat El-Maadi's App to be used by the clubs members
 
 ## Getting Started
 
-Please refer to the Readme File in the Database Repo, you can find it [Here](https://github.com/amrkh97/RacSarayatDB/blob/master/README.md)
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+* Please refer to the Readme File in the Database Repo, you can find it [Here](https://github.com/amrkh97/RacSarayatDB/blob/master/README.md)
+* These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
 ### Prerequisites
 
