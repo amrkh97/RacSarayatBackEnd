@@ -21,6 +21,8 @@ You will need to Install:
 
 After Installing all the programs and cloning the repo:
 
+**NOTE:** You should install the Sql server first and follow all the steps in [The Database's Repo ReadMe](https://github.com/amrkh97/RacSarayatDB/blob/master/README.md)
+
 * **Setting Up The Server**
 1. Open Eclipse.
 2. Choose File -> Import -> Maven - > Existing Maven Project
@@ -60,6 +62,15 @@ After Installing all the programs and cloning the repo:
 11. From the right corner select Runtimes.
 12. Tick the Apache Tomcat v9.0 then click Apply.
 
+* **Setting Up the Database Connection**
+1. In Eclipse, Choose Window -> Show View -> Package Explorer
+2. Navigate to DB
+3. Inside DBManager.java </br>
+    Change the String db_server From:</br>
+       -"jdbc:sqlserver://AMRKHALED97;"</br>
+    to:</br>
+        -"jdbc:sqlserver://YOUR_SQL_SERVER_NAME;"<br>
+    
 ---
 **Your development environment is all set right now, Happy Coding :revolving_hearts:**
 ---
