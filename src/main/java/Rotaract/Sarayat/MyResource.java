@@ -1,9 +1,11 @@
 package Rotaract.Sarayat;
 
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -12,10 +14,12 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.apache.commons.net.ftp.FTP;
+import org.apache.commons.net.ftp.FTPClient;
+
 import BLL.PaymentManager;
 import BLL.PositionsManager;
 import BLL.UserManager;
-import DB.DBManager;
 import Models.MemberArray;
 import Models.MemberFeesArray;
 import Models.MemberModel;
@@ -41,18 +45,19 @@ public class MyResource {
 	@Produces(MediaType.TEXT_PLAIN)
 	public String getIt() {
 
-		/* IMPORTS:
+		/*
+		 * IMPORTS:
 		 * 
-		 * import java.util.Properties;
-		 * import javax.mail.Message; import javax.mail.MessagingException; import
-		 * javax.mail.PasswordAuthentication; import javax.mail.Session; import
-		 * javax.mail.Transport; import javax.mail.internet.InternetAddress; import
-		 * javax.mail.internet.MimeMessage;
+		 * import java.util.Properties; import javax.mail.Message; import
+		 * javax.mail.MessagingException; import javax.mail.PasswordAuthentication;
+		 * import javax.mail.Session; import javax.mail.Transport; import
+		 * javax.mail.internet.InternetAddress; import javax.mail.internet.MimeMessage;
 		 * 
 		 */
 
 		/*
-		 * Properties props = new Properties(); props.put("mail.smtp.host",
+		 * Properties props = new Properties();
+		 * props.put("mail.smtp.host",
 		 * "smtp.gmail.com"); props.put("mail.smtp.socketFactory.port", "465");
 		 * props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
 		 * props.put("mail.smtp.auth", "true"); props.put("mail.smtp.port", "465");
@@ -78,22 +83,44 @@ public class MyResource {
 		 * 
 		 * }
 		 */
-
+		
 		try {
-			Connection conn = DBManager.newConn();
-			System.out.println("NEW CONN: " + conn.toString());
-			CallableStatement cstmt = conn.prepareCall("USE RAC_SARAYAT; SELECT * FROM MemberStatus");
-			ResultSet rs = cstmt.executeQuery();
-			Integer numberRecords = 1;
-			while (rs.next()) {
-				System.out.println("RETRIEVED RECORD:" + numberRecords);
-				numberRecords++;
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+		
+			String desktopPath = System.getProperty("user.home") + "/Desktop";
+			desktopPath.replace("\\", "/");
+			
+			FTPClient ftpClient = new FTPClient();
+			ftpClient.connect("ftp.drivehq.com", 21); // Free FTP Hosting
+			ftpClient.enterLocalPassiveMode();
+			ftpClient.login("USERNAME", "PASSWORD");
+			
+			File file2 = new File(desktopPath + "\\Amr Khaled Zaky-converted.docx");
+			
+			InputStream inputStream = new FileInputStream(file2);
+			ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
+			
+			Boolean test = ftpClient.storeFile("Meeting Minutes.docx", inputStream);
+			
+			inputStream.close();
+			
+			if(test)
+				System.out.println("UPLOAD SUCCEED");
+			
+			OutputStream local = new FileOutputStream(desktopPath + "\\recievedFile"); // Retrieved file saved in File Format
+			
+			test = ftpClient.retrieveFile("\\Meeting Minutes.docx", local);
+			
+			if(test)
+				System.out.println("DOWNLOAD SUCCEED");
+			
+			local.close();
+			ftpClient.logout();
+			
+		} catch (Exception e) {
+			
 			e.printStackTrace();
 		}
-
+		
 		return "Server is Running";
 	}
 
@@ -147,8 +174,7 @@ public class MyResource {
 			return Response.status(400).entity(response).header("Access-Control-Allow-Origin", "*").build();
 		}
 	}
-	
-	
+
 	@Path("user/assignToPosition")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -165,8 +191,7 @@ public class MyResource {
 			return Response.status(400).entity(response).header("Access-Control-Allow-Origin", "*").build();
 		}
 	}
-	
-	
+
 	@Path("user/getByPosition")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -176,13 +201,10 @@ public class MyResource {
 		MemberArray response = new MemberArray();
 		response = UserManager.getMemberByPosition(model);
 		return Response.ok(response).header("Access-Control-Allow-Origin", "*").build();
-	
+
 	}
-	
-	
-	
-	
-	//-----------------------------------------------------------------------------------------------------------------------------------//
+
+	// -----------------------------------------------------------------------------------------------------------------------------------//
 
 	@Path("treasury/addMonthlyFees")
 	@POST
@@ -277,8 +299,8 @@ public class MyResource {
 		return Response.ok(array).header("Access-Control-Allow-Origin", "*").build();
 
 	}
-	
-	//------------------------------------------------------------------------------------------------------------------//
+
+	// ------------------------------------------------------------------------------------------------------------------//
 
 	@Path("position/add")
 	@POST
@@ -297,7 +319,7 @@ public class MyResource {
 		}
 
 	}
-	
+
 	@Path("position/getAll")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -308,7 +330,7 @@ public class MyResource {
 		return Response.ok(response).header("Access-Control-Allow-Origin", "*").build();
 
 	}
-	
+
 	@Path("position/editDescription")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
